@@ -1,9 +1,11 @@
 class Solution {
 public:
+    map<string,vector<int>> dp;
     vector<int> diffWaysToCompute(string exp) {
         //try all possible ways --> Recursion
         //split at operators and solve recursively for left and right substrings
         vector<int> res;
+        if(dp.find(exp)!=dp.end()) return dp[exp];
         for(int i=0;i<exp.length();i++){
             if(exp[i]=='*'||exp[i]=='-'||exp[i]=='+'){
                 vector<int> left=diffWaysToCompute(exp.substr(0,i));
@@ -18,6 +20,6 @@ public:
             }
         }
         if(res.size()==0)   res.push_back(stoi(exp));
-        return res;
+        return dp[exp]=res;
     }
 };
