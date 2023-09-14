@@ -1,6 +1,7 @@
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
+        //Backtracking solution
         //try all possible combinations (Recursion)
         //if open==n && close==n then, add it to res
         //if open<n then only can add '('
@@ -14,7 +15,15 @@ public:
             res.push_back(str);
             return;
         }    
-        if(open<n)  helper(open+1,close,n,str+"(",res);
-        if(close<open)  helper(open,close+1,n,str+")",res);
+        if(open<n){
+            str+="(";
+            helper(open+1,close,n,str,res);
+            str.pop_back();
+        } 
+        if(close<open){
+            str+=")";
+            helper(open,close+1,n,str,res);
+            str.pop_back();
+        } 
     }
 };
