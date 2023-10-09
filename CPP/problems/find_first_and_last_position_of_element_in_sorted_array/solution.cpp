@@ -36,4 +36,3 @@ public:
         return {first,last};
     }
 };
-
