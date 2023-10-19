@@ -6,13 +6,18 @@ public:
 
         set<int> st(nums.begin(),nums.end());
         vector<int> temp(st.begin(),st.end());
+        //removed duplicates and sorted array
         for(int i=0;i<temp.size();i++){
             int op=0;
             int mini=temp[i];
             int maxi=mini+n-1;
             
+            //so [i,j) elements ar in range for considered mini,maxi
+            //in raneg elements = (j-1-i+1) = (j-i)
+            //so we need to change remaining elements which are not in range
+            //i.e  n-(j-i)
             int j=upper_bound(temp.begin(),temp.end(),maxi)-temp.begin();
-            op = i+n-j;
+            op = n-(j-i);
             minOp=min(minOp,op);
         }
         return minOp;
