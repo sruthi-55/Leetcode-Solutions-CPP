@@ -1,32 +1,33 @@
 class Solution {
 public:
     int minTaps(int n, vector<int>& ranges) {
-        int ans=0;
-
-        //from starting at each tap, array stores the max right coordinate 
-        vector<int> tapRange(n+1,0);
+        vector<int> arr(n+1,0);
+        //arr[left] = right;
+        //from starting at each left coordinate, arr stores the max right coordinate
         for(int i=0;i<ranges.size();i++){
-            int left=max(0,i-ranges[i]);
-            tapRange[left]=max(tapRange[left],i+ranges[i]);
+            int left = max(0,i-ranges[i]);
+            arr[left] = max(arr[left],i+ranges[i]);
         }
 
+        int taps=0;
+        int end=0;
+        int maxCanReach=0;
         //spread
-        int end=0,farCanReach=0;
         for(int i=0;i<ranges.size();i++){
-            end=farCanReach;
-            if(end>=n)  return ans;
+            end=maxCanReach;
+            if(end>=n)  return taps;
 
-            //add another tap which starts within end and spreads max
-            ans++;
+            taps++;
+            //consider max range of taps before previous end and compute maxCanReach
             while(i<n+1 && i<=end){
-                farCanReach = max(farCanReach,tapRange[i]);
+                maxCanReach = max(maxCanReach,arr[i]);
                 i++;
             }
-            i--;  
-            //if even after adding tap, farCanReach is not increasing 
+            i--;
+            ////if even after adding tap, maxCanReach is not increasing 
             //then there is discontinuity and hence not possible
-            if(end==farCanReach)    return -1;
+            if(maxCanReach==end)    return -1;
         }
-        return ans;
+        return taps;
     }
 };
