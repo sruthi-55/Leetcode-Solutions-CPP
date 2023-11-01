@@ -5,15 +5,18 @@ public:
     //pick items which sum to 5
     //Multiply value of each picked item and maximize this product
     int integerBreak(int n) {
-        return dfs(n-1,n);
+        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+        return dfs(n-1,n,dp);
     }
-    int dfs(int num,int sum){
+    int dfs(int num,int sum,vector<vector<int>> &dp){
         if(num==1)  return 1;
-        int notPick = dfs(num-1,sum);
+        if(dp[num][sum]!=-1)    return dp[num][sum];
+
+        int notPick = dfs(num-1,sum,dp);
         int pick=0;
-        if(sum>=num)   pick=num*dfs(num,sum-num);
-        return max(pick,notPick);
+        if(sum>=num)   pick=num*dfs(num,sum-num,dp);
+        
+        return dp[num][sum] = max(pick,notPick);
     }
 };
-
 
