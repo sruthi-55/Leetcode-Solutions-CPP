@@ -1,15 +1,14 @@
 class Solution {
 public:
-    int maxArea(vector<int>& height) {
-        int maxA=0;
-        int l=0,h=height.size()-1;
-        while(l<h){
-            int area=min(height[h],height[l])*(h-l);
-            if(area>maxA)   maxA=area;
-            //increment the pointer where the bar is smaller 
-            if(min(height[h],height[l])==height[l]) l++;
+    int maxArea(vector<int>& heights) {
+        int maxa=0;
+        int l=0,h=heights.size()-1;
+        while(l<=h){
+            int area = min(heights[l],heights[h])*(h-l);
+            maxa = max(maxa,area);
+            if(min(heights[l],heights[h])==heights[l])  l++;
             else    h--;
         }
-        return maxA;
+        return maxa;
     }
 };
