@@ -1,9 +1,9 @@
 class Solution {
 public:
-    bool arrayStringsAreEqual(vector<string>& s1, vector<string>& s2) {
-        string fullS1,fullS2;
-        for(auto s:s1)  fullS1+=s;
-        for(auto s:s2)  fullS2+=s;
-        return fullS1==fullS2;
+    bool arrayStringsAreEqual(vector<string>& word1, vector<string>& word2) {
+        string resStr1,resStr2;
+        for(auto s:word1)   resStr1+=s;
+        for(auto s:word2)   resStr2+=s;
+        return resStr1==resStr2;
     }
 };
