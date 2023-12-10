@@ -1,29 +1,22 @@
 class Solution {
 public:
-    bool bfs(int src,vector<vector<int>>& adj,vector<int> &color){
-        queue<int> q;
-        q.push(src);
-        color[src]=0;
-        while(!q.empty()){
-            int node=q.front();
-            q.pop();
-            for(auto nei:adj[node]){
-                if(color[nei]==-1){
-                    q.push(nei);
-                    color[nei]=!color[node];
-                }
-                else if(color[nei]==color[node])	return false;
+    bool hasCycle(int i,int col,vector<vector<int>> &graph,vector<int>& color){
+        color[i]=col;
+        for(auto nei:graph[i]){
+            if(color[nei]==-1){
+                if(hasCycle(nei,!col,graph,color)) return true;
             }
+            else if(color[nei]==col)    return true;
         }
-        return true;
+        return false;
     }
-    bool isBipartite(vector<vector<int>>& adj) {
-        if(adj.size()==0)    return false;
-        int n=adj.size();
-        vector<int> color(n,-1);
-        for(int i=0;i<n;i++){
-            if(color[i]==-1)
-                if(bfs(i,adj,color)==false) return false;
+    bool isBipartite(vector<vector<int>>& graph) {
+        int V=graph.size();
+        vector<int> color(V,-1);
+        for(int i=0;i<V;i++){
+            if(color[i]==-1){
+                if(hasCycle(i,0,graph,color))    return false;
+            }
         }
         return true;
     }
