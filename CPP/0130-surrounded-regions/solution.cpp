@@ -19,7 +19,7 @@ public:
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(i==0 || i==n-1 || j==0 || j==m-1){
-                    if(board[i][j]=='O'){
+                    if(!vis[i][j] && board[i][j]=='O'){
                         dfs(i,j,vis,board,n,m);
                     }
                 }
