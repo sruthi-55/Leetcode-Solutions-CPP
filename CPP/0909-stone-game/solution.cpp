@@ -12,7 +12,9 @@ public:
         }  
         pickLeft += getMaxAliceScore(l+1,r,piles,dp);
         pickRight += getMaxAliceScore(l,r-1,piles,dp);
-        return dp[l][r] = max(pickLeft,pickRight);
+
+        if(isEven)  return dp[l][r] = max(pickLeft,pickRight);
+        return dp[l][r] = min(pickLeft,pickRight);
     }
     bool stoneGame(vector<int>& piles) {
         int n=piles.size();
