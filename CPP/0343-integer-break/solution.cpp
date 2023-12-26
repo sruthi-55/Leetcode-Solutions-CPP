@@ -1,22 +1,22 @@
 class Solution {
 public:
-    //n=5
-    //4,3,2,1   sum=5
-    //pick items which sum to 5
-    //Multiply value of each picked item and maximize this product
-    int integerBreak(int n) {
-        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
-        return dfs(n-1,n,dp);
-    }
-    int dfs(int num,int sum,vector<vector<int>> &dp){
-        if(num==1)  return 1;
-        if(dp[num][sum]!=-1)    return dp[num][sum];
+    int solve(int target,vector<int> &dp){
+        if(target==0)   return 1;
 
-        int notPick = dfs(num-1,sum,dp);
-        int pick=0;
-        if(sum>=num)   pick=num*dfs(num,sum-num,dp);
+        if(dp[target]!=-1)  return dp[target];
         
-        return dp[num][sum] = max(pick,notPick);
+        int ans=0;
+        for(int i=1;i<=target;i++){
+            ans = max(ans, i*solve(target-i,dp) );
+        }
+        return dp[target] = ans;
+    }
+    int integerBreak(int n) {
+        if(n==2)    return 1;
+        if(n==3)    return 2;
+
+        vector<int> dp(n+1,-1);
+        return solve(n,dp);
     }
 };
 
