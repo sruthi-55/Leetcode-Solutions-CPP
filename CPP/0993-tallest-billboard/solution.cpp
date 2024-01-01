@@ -8,11 +8,11 @@ public:
         }
 
         if(dp[i][diff+offset]!=-1)   return dp[i][diff+offset];
-        //can add to support 1
+        //add to support 1
         int addS1 = rods[i]+solve(i+1,diff+rods[i],rods,dp);
-        //or can add to support 2
+        //add to support 2
         int addS2 = solve(i+1,diff-rods[i],rods,dp);
-        //or add to none
+        //add to none
         int doNotAdd = solve(i+1,diff,rods,dp);
 
         return dp[i][diff+offset]= max({addS1,addS2,doNotAdd});
