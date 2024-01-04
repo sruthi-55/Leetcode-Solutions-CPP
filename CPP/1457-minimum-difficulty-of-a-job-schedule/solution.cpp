@@ -1,34 +1,29 @@
 class Solution {
 public:
+    int solve(int i,int daysRem, int maxD, vector<int> &jobDifficulty,
+    vector<vector<vector<int>>> &dp){
+        if(daysRem==0)  return 1e9;
+        if(i==jobDifficulty.size()-1){
+            if(daysRem==1)  return max(maxD,jobDifficulty[i]);
+            else    return 1e9;
+        } 
+
+        if(dp[i][daysRem][maxD]!=-1)    return dp[i][daysRem][maxD];
+
+        //do the job in curr day and end the work for the day
+        int endWork = max(maxD,jobDifficulty[i]) + solve(i+1,daysRem-1,0,jobDifficulty,dp);
+        //do the job in curr day and continue
+        int continueWork = solve(i+1,daysRem,max(maxD,jobDifficulty[i]),jobDifficulty,dp);
+
+        return dp[i][daysRem][maxD] = min(endWork, continueWork);
+    }
     int minDifficulty(vector<int>& jobDifficulty, int d) {
-        int n = jobDifficulty.size();
+        int n=jobDifficulty.size();
+        int maxi = *max_element(jobDifficulty.begin(),jobDifficulty.end());
 
-        if (n < d)
-            return -1;
-
-        vector<vector<int>> t(n+1, vector<int>(d+1, -1));
-        //t[i][j] = minimum diffculty of doing job from index i to n-1 in j days.
-
-        // Base case: if there is only one day - Do all jobs on that day
-        for (int i = 0; i < n; i++) {
-            t[i][1] = *max_element(begin(jobDifficulty) + i, end(jobDifficulty));
-        }
-
-        // Build the DP table bottom-up
-        for (int days = 2; days <= d; days++) {
-            for (int i = 0; i <= n - days; i++) {
-                int maxDifficulty = INT_MIN;
-                int result        = INT_MAX;
-
-                for (int j = i; j <= n - days; j++) {
-                    maxDifficulty   = max(maxDifficulty, jobDifficulty[j]);
-                    result          = min(result, maxDifficulty + t[j + 1][days - 1]);
-                }
-
-                t[i][days] = result;
-            }
-        }
-
-        return t[0][d];
+        vector<vector<vector<int>>> dp(n,vector<vector<int>>(d+1,vector<int>(maxi+1,-1)));
+        int ans = solve(0,d,0,jobDifficulty,dp);
+        if(ans==1e9)    return -1;
+        return ans;
     }
 };
