@@ -1,14 +1,22 @@
 class Solution {
 public:
-    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& img) {
-        for(int i=0;i<img.size();i++){
-            int n=img[i].size();
-            for(int j=0;j<(n+1)/2;j++){
-                int temp=img[i][j];
-                img[i][j]=1-img[i][n-j-1];
-                img[i][n-j-1]=1-temp;
+    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& image) {
+        int n=image.size();
+        for(int i=0;i<n;i++){
+            int l=0,h=n-1;
+            while(l<=h){
+                int temp = image[i][l];
+                image[i][l] = image[i][h];
+                image[i][h] = temp;
+                
+                if(l==h)    image[i][l] ^=1;
+                else{
+                    image[i][l] ^=1;
+                    image[i][h] ^=1;
+                }
+                l++;h--;
             }
         }
-        return img;
+        return image;
     }
 };
