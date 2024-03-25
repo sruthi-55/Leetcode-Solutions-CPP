@@ -11,28 +11,25 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        ListNode *slow=head, *fast=head;
-        while(fast && fast->next){
-            slow=slow->next;
-            fast=fast->next->next;
-        }
+        if(!head)   return true;
 
-        //reverse second half
-        ListNode *prev;
-        prev=NULL;
-        while(slow){
-            ListNode *temp = slow->next;
-            slow->next = prev;
-            prev = slow;
-            slow = temp;
+        stack<ListNode*> stack;
+        ListNode *ptr = head;
+        int size=0;
+        while(ptr){
+            stack.push(ptr);
+            ptr=ptr->next;
+            size++;
         }
-
-        //compare first half and second half
-        ListNode *first = head, *second = prev;
-        while(second){
-            if(first->val != second->val)   return false;
-            first=first->next;
-            second=second->next;
+        
+        ListNode *ptr1=head;
+        for(int i=0;i<size/2;i++){
+            ListNode* ele=stack.top();
+            stack.pop();
+            if(ptr1->val!=ele->val){
+                return false;
+            }   
+            ptr1=ptr1->next;
         }
         return true;
     }
