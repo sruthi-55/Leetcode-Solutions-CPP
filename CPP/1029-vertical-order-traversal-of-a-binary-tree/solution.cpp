@@ -38,10 +38,10 @@ public:
             }
         }
 
-        for(auto entry:mp){
+        for(auto vEntry:mp){
             vector<int> vertical;
-            for(auto p:entry.second){
-                vertical.insert(vertical.end(),p.second.begin(),p.second.end());
+            for(auto lEntry:vEntry.second){
+                vertical.insert(vertical.end(),lEntry.second.begin(),lEntry.second.end());
             }
             ans.push_back(vertical);
         }
