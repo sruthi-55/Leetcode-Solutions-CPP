@@ -10,19 +10,27 @@
  * };
  */
 class Solution {
-public:
+public: 
+    //Brute Force
     bool isBalanced(TreeNode* root) {
-        return check(root)!=-1;
+        return checkBalanced(root);
     }
-    int check(TreeNode* root){
+    bool checkBalanced(TreeNode* root){
+        if(!root)   return true;
+
+        int lH = getHeight(root->left);
+        int rH = getHeight(root->right);
+
+        if(abs(lH-rH)<=1 && 
+        checkBalanced(root->left) && checkBalanced(root->right))  
+            return true;
+
+        return false;
+    }
+    int getHeight(TreeNode* root){
         if(!root)   return 0;
-
-        int lh = check(root->left);
-        if(lh == -1) return -1;
-        int rh = check(root->right);
-        if(rh == -1)    return -1;
-
-        if(abs(lh-rh)>1)    return -1;
-        return 1+max(lh,rh);
+        int lH = getHeight(root->left);
+        int rH = getHeight(root->right);
+        return 1+max(lH,rH);
     }
 };
