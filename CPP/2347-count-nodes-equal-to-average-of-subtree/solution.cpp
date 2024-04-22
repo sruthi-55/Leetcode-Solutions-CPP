@@ -11,17 +11,20 @@
  */
 class Solution {
 public:
-    int sum(TreeNode* root){
-        if(!root)   return 0;
-        return root->val+sum(root->left)+sum(root->right);
-    }
-    int count(TreeNode* root){
-        if(!root)   return 0;
-        return 1+count(root->left)+count(root->right);
+    pair<int,int> postorder(TreeNode* root,int &res){
+        if(!root)   return {};
+
+        pair<int,int> leftP = postorder(root->left,res);
+        pair<int,int> rightP = postorder(root->right,res);
+        int sum = leftP.first + rightP.first + root->val;
+        int count = leftP.second + rightP.second + 1;
+        if(root->val == sum/count)  res++;
+        
+        return {sum,count};
     }
     int averageOfSubtree(TreeNode* root) {
-        if(!root)   return 0;
-        return (sum(root)/count(root)==root->val)+
-            averageOfSubtree(root->left)+averageOfSubtree(root->right);
+        int res = 0;
+        postorder(root,res);
+        return res;
     }
 };
