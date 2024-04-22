@@ -11,22 +11,22 @@
  */
 class Solution {
 public:
-    void getSum(TreeNode* root,int curSum,int &totalSum){
-        if(!root)   return ;
+    int formNumAndGetSum(TreeNode* root,int curSum){
+        if(!root)   return 0;
 
         curSum = curSum * 10 + root->val;
         if(!root->left && !root->right){
-            totalSum += curSum;
-            return ;
+            return curSum;
         }
-        getSum(root->left,curSum,totalSum);
-        getSum(root->right,curSum,totalSum);
 
+        int lSum = formNumAndGetSum(root->left,curSum);
+        int rSum = formNumAndGetSum(root->right,curSum);
+
+        return lSum+rSum;
     }
+
     int sumNumbers(TreeNode* root) {
-        int totalSum = 0;
         int curSum = 0;
-        getSum(root,curSum,totalSum);
-        return totalSum;
+        return formNumAndGetSum(root,curSum);
     }
 };
