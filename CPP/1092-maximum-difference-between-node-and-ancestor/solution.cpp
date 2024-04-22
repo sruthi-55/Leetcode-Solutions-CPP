@@ -12,7 +12,7 @@
 class Solution {
 public:
     int solve(TreeNode* root, int mini, int maxi) {
-        if (root == nullptr) {
+        if (!root) {
             return maxi - mini;
         }
 
@@ -26,10 +26,6 @@ public:
     }
 
     int maxAncestorDiff(TreeNode* root) {
-        if (root == nullptr) {
-            return 0;
-        }
-
         return solve(root, root->val, root->val);
     }
 };
