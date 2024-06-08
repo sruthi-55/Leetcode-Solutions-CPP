@@ -10,13 +10,13 @@ public:
         int sum=0;
         for(int i=0;i<n;i++){
             sum+=nums[i];
-            int req=sum%k;
-            if(prefixRem.find(req)!=prefixRem.end()){
-                int prevI=prefixRem[req];
-                if(i-prevI>1) return true; 
+            int rem=sum%k;
+            if(prefixRem.find(rem)!=prefixRem.end()){
+                int prevI=prefixRem[rem];
+                if(i-prevI >= 2)  return true; 
             }
             //we need max possible length 
-            //so we don't update if we already got same remainder before
+            //so we update only if remainder not found before
             else    prefixRem[sum%k]=i;
         }
         return false;
